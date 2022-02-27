@@ -8,11 +8,11 @@ namespace EveryeyeFeed.Library
 {
     public class RssBuilder
     {
-        private readonly string _link;
+        private readonly string _selfRef;
 
-        public RssBuilder(string link)
+        public RssBuilder(string selfRef)
         {
-            _link = link;
+            _selfRef = selfRef;
         }
 
         public string Generate(List<Article> articles)
@@ -30,13 +30,13 @@ namespace EveryeyeFeed.Library
 
             feedWriter.WriteStartElement("channel");
             feedWriter.WriteElementString("title", "Everyeye Feed");
-            feedWriter.WriteElementString("link", _link);
+            feedWriter.WriteElementString("link", _selfRef);
             feedWriter.WriteElementString("description", "Everyeye Feed");
             feedWriter.WriteElementString("lastBuildDate", Helpers.GetRssDate(DateTime.UtcNow));
 
             // ATOM element
             feedWriter.WriteStartElement("atom", "link", null);
-            feedWriter.WriteAttributeString("href", _link);
+            feedWriter.WriteAttributeString("href", _selfRef);
             feedWriter.WriteAttributeString("rel", "self");
             feedWriter.WriteAttributeString("type", "application/rss+xml");
             feedWriter.WriteEndElement();

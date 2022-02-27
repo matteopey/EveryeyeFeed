@@ -43,7 +43,7 @@ namespace EveryeyeFeed
             var articles = (await Task.WhenAll(tasks))
                 .Aggregate(Enumerable.Empty<Article>(), (a, b) => a.Concat(b));
 
-            var ret = new RssBuilder("TODO")
+            var ret = new RssBuilder(GetSelf(req))
                 .Generate(articles.OrderByDescending(x => x.Date).ToList());
 
             log.LogInformation("Building the RSS took: {Time}ms", sw.ElapsedMilliseconds);
@@ -63,6 +63,26 @@ namespace EveryeyeFeed
             }
 
             return 1;
+        }
+
+        private static string GetSelf(HttpRequest req)
+        {
+            var sb = new StringBuilder();
+
+            if (req.IsHttps)
+            {
+                sb.Append("https://");
+            }
+            else
+            {
+                sb.Append("http://");
+            }
+
+            sb.Append(req.Host);
+            sb.Append(req.Path);
+            sb.Append(req.QueryString);
+
+            return sb.ToString();
         }
     }
 }
