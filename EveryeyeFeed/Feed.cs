@@ -56,7 +56,7 @@ namespace EveryeyeFeed
 
         private static int GetPages(HttpRequest req)
         {
-            if (req.Query.ContainsKey("pages"))
+            if (req.Query.ContainsKey("pages") && !string.IsNullOrEmpty(req.Query["pages"]))
             {
                 return int.Parse(req.Query["pages"]);
             }
