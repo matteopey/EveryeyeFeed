@@ -7,26 +7,11 @@ namespace EveryeyeFeed
 {
     public class Parser
     {
-        private readonly string _urlTemplate;
-
-        public Parser(string urlTemplate)
+        public IEnumerable<Article> GetArticles(string urlTemplate, int page)
         {
-            if (!urlTemplate.Contains("{0}"))
-            {
-                throw new ArgumentException("URL template must include {0}");
-            }
-
-            _urlTemplate = urlTemplate;
-        }
-
-        public List<Article> GetArticles(int page)
-        {
-            var url = string.Format(_urlTemplate, page);
-
-            var web = new HtmlWeb();
-            var document = web.Load(url);
-
-            return document.DocumentNode.SelectNodes("//article[@class='fvideogioco']")
+            return GetDocument(urlTemplate, page)
+                .DocumentNode
+                .SelectNodes("//article[@class='fvideogioco']")
                 .Select(article =>
                 {
                     var category = article
@@ -48,19 +33,7 @@ namespace EveryeyeFeed
                         title += $" | {vote.InnerText}";
                     }
 
-                    var dateSplitted = article
-                        .SelectSingleNode(".//div[@class='testi_notizia']/span/b")
-                        .InnerText
-                        .Trim()
-                        .Replace(category, string.Empty)
-                        .Split(' ');
-
-                    var month = (int)Enum.Parse(typeof(Months), dateSplitted[1]);
-
-                    var date = new DateTime(
-                        int.Parse(dateSplitted[2]),
-                        month,
-                        int.Parse(dateSplitted[0]));
+                    var date = GetDate(article, category);
 
                     var link = article
                         .SelectSingleNode(".//div[@class='testi_notizia']/a")
@@ -70,11 +43,35 @@ namespace EveryeyeFeed
                     {
                         Title = title,
                         Link = link,
-                        Date = Helpers.GetRssDate(date),
+                        Date = date,
                         Description = article.SelectSingleNode(".//div[@class='testi_notizia']/p").InnerText,
                     };
                 })
                 .ToList();
+        }
+
+        private DateTime GetDate(HtmlNode article, string category)
+        {
+            var dateString = article
+                .SelectSingleNode(".//div[@class='testi_notizia']/span/b")
+                .InnerText
+                .Trim()
+                .Replace(category, string.Empty);
+
+            return Helpers.GetEveryeyeDate(dateString);
+        }
+
+        private HtmlDocument GetDocument(string urlTemplate, int page)
+        {
+            if (!urlTemplate.Contains("{0}"))
+            {
+                throw new ArgumentException("URL template must include {0}");
+            }
+
+            var url = string.Format(urlTemplate, page);
+
+            var web = new HtmlWeb();
+            return web.Load(url);
         }
     }
 }

@@ -62,7 +62,7 @@ namespace EveryeyeFeed
                 feedWriter.WriteEndElement();
 
                 feedWriter.WriteElementString("link", article.Link);
-                feedWriter.WriteElementString("pubDate", article.Date);
+                feedWriter.WriteElementString("pubDate", Helpers.GetRssDate(article.Date));
 
                 feedWriter.WriteEndElement();
             }

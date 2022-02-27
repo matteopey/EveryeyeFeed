@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EveryeyeFeed", "EveryeyeFeed\EveryeyeFeed.csproj", "{D3ED0BF4-CEAB-4F76-99D2-F4497E6B8745}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveryeyeFeed.Test", "EveryeyeFeed.Test\EveryeyeFeed.Test.csproj", "{F3AC6EBA-F26D-4BA4-AAF7-49D04364E660}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D3ED0BF4-CEAB-4F76-99D2-F4497E6B8745}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3ED0BF4-CEAB-4F76-99D2-F4497E6B8745}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3ED0BF4-CEAB-4F76-99D2-F4497E6B8745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3AC6EBA-F26D-4BA4-AAF7-49D04364E660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3AC6EBA-F26D-4BA4-AAF7-49D04364E660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3AC6EBA-F26D-4BA4-AAF7-49D04364E660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3AC6EBA-F26D-4BA4-AAF7-49D04364E660}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
