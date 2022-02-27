@@ -41,10 +41,11 @@ namespace EveryeyeFeed
             }
 
             var articles = (await Task.WhenAll(tasks))
-                .Aggregate(Enumerable.Empty<Article>(), (a, b) => a.Concat(b));
+                .Aggregate(Enumerable.Empty<Article>(), (a, b) => a.Concat(b))
+                .OrderByDescending(x => x.Date)
+                .ToList();
 
-            var ret = new RssBuilder(GetSelf(req))
-                .Generate(articles.OrderByDescending(x => x.Date).ToList());
+            var ret = new RssBuilder(GetSelf(req)).Generate(articles);
 
             log.LogInformation("Building the RSS took: {Time}ms", sw.ElapsedMilliseconds);
             sw.Stop();
