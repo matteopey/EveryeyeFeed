@@ -8,9 +8,9 @@ namespace EveryeyeFeed.Library
 {
     public class Parser
     {
-        public Task<IEnumerable<Article>> GetArticles(string urlTemplate, int page)
+        public async Task<IEnumerable<Article>> GetArticles(string urlTemplate, int page)
         {
-            var articles = GetDocument(urlTemplate, page)
+            var articles = (await GetDocument(urlTemplate, page))
                 .DocumentNode
                 .SelectNodes("//article[@class='fvideogioco']")
                 .Select(article =>
@@ -49,7 +49,7 @@ namespace EveryeyeFeed.Library
                     };
                 });
 
-            return Task.FromResult(articles);
+            return articles;
         }
 
         private DateTime GetDate(HtmlNode article, string category)
@@ -63,7 +63,7 @@ namespace EveryeyeFeed.Library
             return Helpers.GetEveryeyeDate(dateString);
         }
 
-        private HtmlDocument GetDocument(string urlTemplate, int page)
+        private async Task<HtmlDocument> GetDocument(string urlTemplate, int page)
         {
             if (!urlTemplate.Contains("{0}"))
             {
@@ -73,7 +73,7 @@ namespace EveryeyeFeed.Library
             var url = string.Format(urlTemplate, page);
 
             var web = new HtmlWeb();
-            return web.Load(url);
+            return await web.LoadFromWebAsync(url);
         }
     }
 }
