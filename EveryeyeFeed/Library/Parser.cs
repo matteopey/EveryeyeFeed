@@ -26,7 +26,15 @@ namespace EveryeyeFeed.Library
                         .SelectSingleNode(".//div[@class='testi_notizia']/a")
                         .GetAttributeValue("title", string.Empty);
 
-                    var title = $"{category} | {linkTitle}";
+                    var title = string.Empty;
+                    if (category == "NOTIZIA")
+                    {
+                        title = linkTitle;
+                    }
+                    else
+                    {
+                        title = $"{category} | {linkTitle}";
+                    }
 
                     var vote = article.SelectSingleNode(".//*[@class='ico-voto']");
                     if (vote != null)
