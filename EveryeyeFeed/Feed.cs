@@ -47,6 +47,7 @@ namespace EveryeyeFeed
                 .Generate(articles.OrderByDescending(x => x.Date).ToList());
 
             log.LogInformation("Building the RSS took: {Time}ms", sw.ElapsedMilliseconds);
+            sw.Stop();
 
             req.HttpContext.Response.ContentType = "application/xml";
             await req.HttpContext.Response.WriteAsync(ret, Encoding.UTF8);
