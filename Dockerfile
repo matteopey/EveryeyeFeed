@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["EveryeyeFeed/EveryeyeFeed.csproj", "EveryeyeFeed/"]
 RUN dotnet restore "EveryeyeFeed/EveryeyeFeed.csproj"
-COPY . .
+COPY EveryeyeFeed .
 WORKDIR "/src/EveryeyeFeed"
 RUN dotnet build "EveryeyeFeed.csproj" -c Release -o /app/build
 

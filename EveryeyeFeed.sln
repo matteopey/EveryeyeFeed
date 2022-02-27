@@ -5,7 +5,12 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EveryeyeFeed", "EveryeyeFeed\EveryeyeFeed.csproj", "{D3ED0BF4-CEAB-4F76-99D2-F4497E6B8745}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveryeyeFeed.Test", "EveryeyeFeed.Test\EveryeyeFeed.Test.csproj", "{F3AC6EBA-F26D-4BA4-AAF7-49D04364E660}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EveryeyeFeed.Test", "EveryeyeFeed.Test\EveryeyeFeed.Test.csproj", "{F3AC6EBA-F26D-4BA4-AAF7-49D04364E660}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{222D6C13-F206-4E2C-8FE2-A89EC3202E01}"
+	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
