@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EveryeyeFeed
+namespace EveryeyeFeed.Library
 {
     public class Article
     {

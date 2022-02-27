@@ -1,3 +1,4 @@
+using EveryeyeFeed.Library;
 using FluentAssertions;
 using NUnit.Framework;
 using System;

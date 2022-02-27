@@ -1,8 +1,7 @@
-﻿using HtmlAgilityPack;
-using System;
+﻿using System;
 using System.Globalization;
 
-namespace EveryeyeFeed
+namespace EveryeyeFeed.Library
 {
     public static class Helpers
     {
