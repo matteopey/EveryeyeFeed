@@ -2,14 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EveryeyeFeed.Library
 {
     public class Parser
     {
-        public IEnumerable<Article> GetArticles(string urlTemplate, int page)
+        public Task<IEnumerable<Article>> GetArticles(string urlTemplate, int page)
         {
-            return GetDocument(urlTemplate, page)
+            var articles = GetDocument(urlTemplate, page)
                 .DocumentNode
                 .SelectNodes("//article[@class='fvideogioco']")
                 .Select(article =>
@@ -46,8 +47,9 @@ namespace EveryeyeFeed.Library
                         Date = date,
                         Description = article.SelectSingleNode(".//div[@class='testi_notizia']/p").InnerText,
                     };
-                })
-                .ToList();
+                });
+
+            return Task.FromResult(articles);
         }
 
         private DateTime GetDate(HtmlNode article, string category)

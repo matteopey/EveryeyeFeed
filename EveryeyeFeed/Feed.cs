@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +20,8 @@ namespace EveryeyeFeed
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log)
         {
+            var sw = Stopwatch.StartNew();
+
             var articlesUrl = "https://www.everyeye.it/articoli/pc/?pagina={0}";
             var newsUrl = "https://www.everyeye.it/notizie/pc/?pagina={0}";
 
@@ -26,18 +30,23 @@ namespace EveryeyeFeed
             log.LogInformation("Getting data for num. {Pages} pages", pages);
 
             var parser = new Parser();
-            var articles = new List<Article>();
             int page = 1;
+            var tasks = new List<Task<IEnumerable<Article>>>();
             while (page <= pages)
             {
-                articles.AddRange(parser.GetArticles(articlesUrl, page));
-                articles.AddRange(parser.GetArticles(newsUrl, page));
+                tasks.Add(parser.GetArticles(articlesUrl, page));
+                tasks.Add(parser.GetArticles(newsUrl, page));
 
                 page++;
             }
 
+            var articles = (await Task.WhenAll(tasks))
+                .Aggregate(Enumerable.Empty<Article>(), (a, b) => a.Concat(b));
+
             var ret = new RssBuilder("TODO")
                 .Generate(articles.OrderByDescending(x => x.Date).ToList());
+
+            log.LogInformation("Building the RSS took: {Time}ms", sw.ElapsedMilliseconds);
 
             req.HttpContext.Response.ContentType = "application/xml";
             await req.HttpContext.Response.WriteAsync(ret, Encoding.UTF8);
