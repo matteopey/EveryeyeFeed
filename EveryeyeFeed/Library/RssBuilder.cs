@@ -15,7 +15,7 @@ namespace EveryeyeFeed.Library
             _selfRef = selfRef;
         }
 
-        public string Generate(List<Article> articles)
+        public string Generate(IEnumerable<Article> articles)
         {
             using var stream = new MemoryStream();
 
