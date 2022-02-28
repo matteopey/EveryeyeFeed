@@ -27,6 +27,7 @@ namespace EveryeyeFeed.Library
             feedWriter.WriteStartElement("rss");
             feedWriter.WriteAttributeString("version", "2.0");
             feedWriter.WriteAttributeString("xmlns", "atom", null, "http://www.w3.org/2005/Atom");
+            feedWriter.WriteAttributeString("xmlns", "media", null, "http://search.yahoo.com/mrss/");
 
             feedWriter.WriteStartElement("channel");
             feedWriter.WriteElementString("title", "Everyeye Feed");
@@ -60,6 +61,11 @@ namespace EveryeyeFeed.Library
 
                 feedWriter.WriteElementString("link", article.Link);
                 feedWriter.WriteElementString("pubDate", Helpers.GetRssDate(article.Date));
+
+                feedWriter.WriteStartElement("media", "content", null);
+                feedWriter.WriteAttributeString("url", article.ImageUrl);
+                feedWriter.WriteAttributeString("type", "image/webp");
+                feedWriter.WriteEndElement();
 
                 feedWriter.WriteEndElement();
             }

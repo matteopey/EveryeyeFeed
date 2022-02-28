@@ -48,12 +48,17 @@ namespace EveryeyeFeed.Library
                         .SelectSingleNode(".//div[@class='testi_notizia']/a")
                         .GetAttributeValue("href", string.Empty);
 
+                    var imageUrl = article
+                        .SelectSingleNode(".//a[contains(concat(' ',normalize-space(@class),' '),'img-arrow')]/img")
+                        .GetAttributeValue("data-src", string.Empty);
+
                     return new Article
                     {
                         Title = title,
                         Link = link,
                         Date = date,
                         Description = article.SelectSingleNode(".//div[@class='testi_notizia']/p").InnerText,
+                        ImageUrl = imageUrl
                     };
                 });
 
