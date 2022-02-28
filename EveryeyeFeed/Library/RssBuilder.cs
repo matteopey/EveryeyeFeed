@@ -47,7 +47,6 @@ namespace EveryeyeFeed.Library
                 feedWriter.WriteStartElement("item");
 
                 feedWriter.WriteStartElement("guid");
-                feedWriter.WriteAttributeString("isPermaLink", "true");
                 feedWriter.WriteString(article.Link);
                 feedWriter.WriteEndElement();
 
