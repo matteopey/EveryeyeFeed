@@ -1,8 +1,6 @@
-name: Build and deploy
+name: PR Build
 on:
-  push:
-    branches:
-    - master
+  pull_request:
 # env:
 #   AZURE_FUNCTIONAPP_PACKAGE_PATH: EveryeyeFeed/published
 #   AZURE_FUNCTIONAPP_NAME: everyeyefeeds
@@ -17,9 +15,3 @@ jobs:
       CONFIGURATION: ${{ env.CONFIGURATION }}
       DOTNET_CORE_VERSION: ${{ env.DOTNET_CORE_VERSION }}
       WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
-  deploy:
-    uses: ./deploy-func.yml
-    with:
-      AZURE_FUNCTIONAPP_PACKAGE_PATH: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-      AZURE_FUNCTIONAPP_NAME: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-    secrets: inherit
