@@ -3,23 +3,9 @@ on:
   push:
     branches:
     - master
-# env:
-#   AZURE_FUNCTIONAPP_PACKAGE_PATH: EveryeyeFeed/published
-#   AZURE_FUNCTIONAPP_NAME: everyeyefeeds
-#   CONFIGURATION: Release
-#   DOTNET_CORE_VERSION: 6.0.x
-#   WORKING_DIRECTORY: EveryeyeFeed
 jobs:
   build:
     uses: ./.github/workflows/build.yml
-    # with:
-    #   AZURE_FUNCTIONAPP_PACKAGE_PATH: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-    #   CONFIGURATION: ${{ env.CONFIGURATION }}
-    #   DOTNET_CORE_VERSION: ${{ env.DOTNET_CORE_VERSION }}
-    #   WORKING_DIRECTORY: ${{ env.WORKING_DIRECTORY }}
   deploy:
     uses: ./.github/workflows/deploy-func.yml
-    # with:
-    #   AZURE_FUNCTIONAPP_PACKAGE_PATH: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-    #   AZURE_FUNCTIONAPP_NAME: ${{ env.AZURE_FUNCTIONAPP_NAME }}
     secrets: inherit

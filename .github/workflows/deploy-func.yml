@@ -1,12 +1,5 @@
 on:
   workflow_call:
-    # env:
-    #   AZURE_FUNCTIONAPP_PACKAGE_PATH:
-    #     required: true
-    #     type: string
-    #   AZURE_FUNCTIONAPP_NAME:
-    #     required: true
-    #     type: string
     secrets:
       everyeyefeeds_64FD:
         required: true

@@ -1,18 +1,5 @@
 on:
   workflow_call:
-    # env:
-    #   AZURE_FUNCTIONAPP_PACKAGE_PATH:
-    #     required: true
-    #     type: string
-    #   CONFIGURATION:
-    #     required: true
-    #     type: string
-    #   DOTNET_CORE_VERSION:
-    #     required: true
-    #     type: string
-    #   WORKING_DIRECTORY:
-    #     required: true
-    #     type: string
 jobs:
   build:
     runs-on: ubuntu-latest
