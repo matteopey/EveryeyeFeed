@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set environment variables
-      uses: matteopey/EveryeyeFeed/.github/actions/set-env-variables
+      uses: ./.github/actions/set-env-variables
       with:
         varFilePath: ./.github/default-variables.env
     - uses: actions/checkout@master
