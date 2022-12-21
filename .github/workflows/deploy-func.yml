@@ -16,7 +16,7 @@ jobs:
     needs: build
     steps:
     - name: Set environment variables
-      uses: ./.github/actions/set-env-variables.yml
+      uses: ./.github/actions/set-env-variables
       with:
         varFilePath: ./.github/default-variables.env
     - name: Download artifact from build job
