@@ -18,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Set environment variables
-      uses: ../actions/set-env-variables.yml
+      uses: ./.github/actions/set-env-variables.yml
       with:
-        varFilePath: ../default-variables.env
+        varFilePath: ./.github/default-variables.env
     - uses: actions/checkout@master
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
