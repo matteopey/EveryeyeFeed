@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Set environment variables
-      uses: ./.github/actions/set-env-variables
+      uses: matteopey/EveryeyeFeed/.github/actions/set-env-variables
       with:
         varFilePath: ./.github/default-variables.env
     - uses: actions/checkout@master
