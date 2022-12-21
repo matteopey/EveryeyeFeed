@@ -4,8 +4,9 @@ on:
     branches:
     - master
 jobs:
-  build:
-    uses: ./.github/workflows/build-and-publish.yml
-  deploy:
+  build-project:
+    uses: ./.github/workflows/build-project.yml
+  deploy-func:
     uses: ./.github/workflows/deploy-func.yml
+    needs: build-project
     secrets: inherit
