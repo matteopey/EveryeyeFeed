@@ -17,6 +17,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - name: Set environment variables
       uses: matteopey/EveryeyeFeed/.github/actions/set-env-variables
       with:
