@@ -9,7 +9,7 @@ on:
 #   WORKING_DIRECTORY: EveryeyeFeed
 jobs:
   build:
-    uses: ./.github/build.yml
+    uses: ./.github/workflows/build.yml
     # with:
     #   AZURE_FUNCTIONAPP_PACKAGE_PATH: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
     #   CONFIGURATION: ${{ env.CONFIGURATION }}
