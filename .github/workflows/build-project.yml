@@ -8,9 +8,6 @@ on:
         default: false
         required: false
 
-env:
-  PR: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,7 +26,7 @@ jobs:
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
     - name: Upload build
-      if: ${{ env.PR == 'false' }}
+      if: ${{ inputs.PR == 'false' }}
       uses: actions/upload-artifact@v3
       with:
         name: functionapp
