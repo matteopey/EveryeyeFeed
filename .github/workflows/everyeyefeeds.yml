@@ -8,8 +8,6 @@ on:
 jobs:
   build-project:
     uses: ./.github/workflows/build-project.yml
-    with:
-      is-pr: true
   deploy-func:
     uses: ./.github/workflows/deploy-func.yml
     needs: build-project
