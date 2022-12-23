@@ -1,8 +1,10 @@
 name: Build and deploy
+
 on:
   push:
     branches:
     - master
+
 jobs:
   build-project:
     uses: ./.github/workflows/build-project.yml

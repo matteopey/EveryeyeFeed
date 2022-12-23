@@ -1,9 +1,12 @@
 name: Build
+
 on:
   workflow_call:
-
-env:
-  PR: false
+    inputs:
+      is-pr:
+        type: boolean
+        default: false
+        required: false
 
 jobs:
   build:
@@ -15,7 +18,7 @@ jobs:
       with:
         varFilePath: ./.github/default-variables.env
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
     - name: Build
@@ -23,8 +26,8 @@ jobs:
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
     - name: Upload build
-      if: ${{ env.PR == 'false' }}
-      uses: actions/upload-artifact@v1
+      if: ${{ inputs.PR == 'false' }}
+      uses: actions/upload-artifact@v3
       with:
         name: functionapp
         path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
