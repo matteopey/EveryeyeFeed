@@ -5,8 +5,7 @@ on:
     inputs:
       is-pr:
         type: boolean
-        default: false
-        required: false
+        required: true
 
 jobs:
   build:
@@ -26,7 +25,7 @@ jobs:
     - name: Publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
     - name: Upload build
-      if: ${{ inputs.PR == 'false' }}
+      if: ${{ inputs.is-pr == false }}
       uses: actions/upload-artifact@v3
       with:
         name: functionapp
