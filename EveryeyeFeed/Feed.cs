@@ -43,7 +43,7 @@ namespace EveryeyeFeed
                 .Aggregate(Enumerable.Empty<Article>(), (a, b) => a.Concat(b))
                 .OrderByDescending(x => x.Date);
 
-            var ret = new RssBuilder(GetSelf(req)).Generate(articles);
+            var ret = new RssBuilder(req.Url.ToString()).Generate(articles);
 
             _logger.LogInformation("Building the RSS took: {Time}ms", sw.ElapsedMilliseconds);
             sw.Stop();
@@ -66,35 +66,6 @@ namespace EveryeyeFeed
             }
 
             return 1;
-        }
-
-        private static string GetSelf(HttpRequestData req)
-        {
-
-            return string.Empty;
-
-            //var url = new Flurl.Url()
-            //{
-            //    Scheme = "https",
-            //    Host = req.,
-            //}
-
-            //var sb = new StringBuilder();
-
-            //if (req.)
-            //{
-            //    sb.Append("https://");
-            //}
-            //else
-            //{
-            //    sb.Append("http://");
-            //}
-
-            //sb.Append(req.Host);
-            //sb.Append(req.Path);
-            //sb.Append(req.QueryString);
-
-            //return sb.ToString();
         }
     }
 }
