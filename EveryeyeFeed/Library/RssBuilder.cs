@@ -28,6 +28,7 @@ namespace EveryeyeFeed.Library
             feedWriter.WriteAttributeString("version", "2.0");
             feedWriter.WriteAttributeString("xmlns", "atom", null, "http://www.w3.org/2005/Atom");
             feedWriter.WriteAttributeString("xmlns", "media", null, "http://search.yahoo.com/mrss/");
+            feedWriter.WriteAttributeString("xmlns", "content", null, "http://purl.org/rss/1.0/modules/content/");
 
             feedWriter.WriteStartElement("channel");
             feedWriter.WriteElementString("title", "Everyeye Feed");
