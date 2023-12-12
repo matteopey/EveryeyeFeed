@@ -50,7 +50,7 @@ namespace EveryeyeFeed.Library
 
                     var imageUrl = article
                         .SelectSingleNode(".//a[contains(concat(' ',normalize-space(@class),' '),'img-arrow')]/img")
-                        .GetAttributeValue("data-src", string.Empty);
+                        .GetAttributeValue("src", string.Empty);
 
                     return new Article
                     {
