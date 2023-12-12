@@ -1,23 +1,23 @@
 using EveryeyeFeed.Library;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EveryeyeFeed
 {
-    public static class Feed
+    public class Feed(ILogger<Feed> logger)
     {
-        [FunctionName("Feed")]
-        public async static Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = null)] HttpRequest req,
-            ILogger log)
+        private readonly ILogger<Feed> _logger = logger;
+
+        [Function(nameof(Feed))]
+        public async Task<HttpResponseData> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = null)] HttpRequestData req)
         {
             var sw = Stopwatch.StartNew();
 
@@ -26,7 +26,7 @@ namespace EveryeyeFeed
 
             var pages = GetPages(req);
 
-            log.LogInformation("Getting data for num. {Pages} pages", pages);
+            _logger.LogInformation("Getting data for num. {Pages} pages", pages);
 
             var parser = new Parser();
             int page = 1;
@@ -45,43 +45,56 @@ namespace EveryeyeFeed
 
             var ret = new RssBuilder(GetSelf(req)).Generate(articles);
 
-            log.LogInformation("Building the RSS took: {Time}ms", sw.ElapsedMilliseconds);
+            _logger.LogInformation("Building the RSS took: {Time}ms", sw.ElapsedMilliseconds);
             sw.Stop();
 
-            req.HttpContext.Response.ContentType = "application/xml";
-            await req.HttpContext.Response.WriteAsync(ret, Encoding.UTF8);
+            var response = req.CreateResponse();
+            response.StatusCode = HttpStatusCode.OK;
+            response.Headers.Add("Content-Type", "application/xml");
+            await response.WriteStringAsync(ret, Encoding.UTF8);
 
-            return new EmptyResult();
+            return response;
         }
 
-        private static int GetPages(HttpRequest req)
+        private static int GetPages(HttpRequestData req)
         {
-            if (req.Query.ContainsKey("pages") && !string.IsNullOrEmpty(req.Query["pages"]))
+            var pagesQueryExists = req.Query.AllKeys.Contains("pages");
+
+            if (pagesQueryExists && int.TryParse(req.Query["pages"], out int pages))
             {
-                return int.Parse(req.Query["pages"]);
+                return pages;
             }
 
             return 1;
         }
 
-        private static string GetSelf(HttpRequest req)
+        private static string GetSelf(HttpRequestData req)
         {
-            var sb = new StringBuilder();
 
-            if (req.IsHttps)
-            {
-                sb.Append("https://");
-            }
-            else
-            {
-                sb.Append("http://");
-            }
+            return string.Empty;
 
-            sb.Append(req.Host);
-            sb.Append(req.Path);
-            sb.Append(req.QueryString);
+            //var url = new Flurl.Url()
+            //{
+            //    Scheme = "https",
+            //    Host = req.,
+            //}
 
-            return sb.ToString();
+            //var sb = new StringBuilder();
+
+            //if (req.)
+            //{
+            //    sb.Append("https://");
+            //}
+            //else
+            //{
+            //    sb.Append("http://");
+            //}
+
+            //sb.Append(req.Host);
+            //sb.Append(req.Path);
+            //sb.Append(req.QueryString);
+
+            //return sb.ToString();
         }
     }
 }
