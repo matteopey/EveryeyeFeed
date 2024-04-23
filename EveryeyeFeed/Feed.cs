@@ -41,6 +41,7 @@ namespace EveryeyeFeed
 
             var articles = (await Task.WhenAll(tasks))
                 .Aggregate(Enumerable.Empty<Article>(), (a, b) => a.Concat(b))
+                .Where(ShouldBeAdded)
                 .OrderByDescending(x => x.Date);
 
             var ret = new RssBuilder(req.Url.ToString()).Generate(articles);
@@ -66,6 +67,11 @@ namespace EveryeyeFeed
             }
 
             return 1;
+        }
+
+        private static bool ShouldBeAdded(Article article)
+        {
+            return !article.Title.Contains("OFFERTE");
         }
     }
 }
