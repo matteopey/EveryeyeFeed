@@ -13,6 +13,8 @@ namespace EveryeyeFeed
 {
     public class Feed(ILogger<Feed> logger)
     {
+        private readonly ILogger<Feed> _logger = logger;
+
         [Function(nameof(Feed))]
         public async Task<HttpResponseData> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "GET", Route = null)] HttpRequestData req)
@@ -24,7 +26,7 @@ namespace EveryeyeFeed
 
             var pages = GetPages(req);
 
-            logger.LogInformation("Getting data for num. {Pages} pages", pages);
+            _logger.LogInformation("Getting data for num. {Pages} pages", pages);
 
             var parser = new Parser();
             int page = 1;
@@ -44,7 +46,7 @@ namespace EveryeyeFeed
 
             var ret = new RssBuilder(req.Url.ToString()).Generate(articles);
 
-            logger.LogInformation("Building the RSS took: {Time}ms", sw.ElapsedMilliseconds);
+            _logger.LogInformation("Building the RSS took: {Time}ms", sw.ElapsedMilliseconds);
             sw.Stop();
 
             var response = req.CreateResponse();
