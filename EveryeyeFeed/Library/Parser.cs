@@ -1,4 +1,4 @@
-﻿using HtmlAgilityPack;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EveryeyeFeed.Library
 {
-    public class Parser
+    public class Parser()
     {
         public async Task<IEnumerable<Article>> GetArticles(string urlTemplate, int page)
         {
@@ -20,11 +20,13 @@ namespace EveryeyeFeed.Library
                         .InnerText
                         .Split(' ')
                         .First()
+                        .Decode()
                         .ToUpper();
 
                     var linkTitle = article
                         .SelectSingleNode(".//div[@class='testi_notizia']/a")
-                        .GetAttributeValue("title", string.Empty);
+                        .GetAttributeValue("title", string.Empty)
+                        .Decode();
 
                     var title = string.Empty;
                     if (category == "NOTIZIA")
@@ -39,7 +41,7 @@ namespace EveryeyeFeed.Library
                     var vote = article.SelectSingleNode(".//*[@class='ico-voto']");
                     if (vote != null)
                     {
-                        title += $" | {vote.InnerText}";
+                        title += $" | {vote.InnerText.Decode()}";
                     }
 
                     var date = GetDate(article, category);
@@ -57,7 +59,7 @@ namespace EveryeyeFeed.Library
                         Title = title,
                         Link = link,
                         Date = date,
-                        Description = article.SelectSingleNode(".//div[@class='testi_notizia']/p").InnerText,
+                        Description = article.SelectSingleNode(".//div[@class='testi_notizia']/p").InnerText.Decode(),
                         ImageUrl = imageUrl
                     };
                 });
